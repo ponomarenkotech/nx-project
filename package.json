@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "start:web": "npx nx serve nx-project-web",
+    "start:admin": "npx nx serve nx-project-admin",
+    "lint": "npx nx run-many -t lint",
+    "build": "npx nx run-many -t build",
     "storybook": "nx storybook ui-kit"
   },
   "private": true,

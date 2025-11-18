@@ -2,8 +2,9 @@
   "name": "@nx-project/shell",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^20.1.0",
-    "@angular/core": "^20.1.0"
+    "@angular/core": "^20.1.0",
+    "@angular/router": "~20.1.0",
+    "@nx-project/page-main": "0.0.1"
   },
   "sideEffects": false
 }
