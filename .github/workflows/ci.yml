@@ -132,14 +132,14 @@ jobs:
 
       - run: npm ci --legacy-peer-deps
 
-      # Билдим сторибук для либы ui (проверь, что таргет называется именно так)
-      - name: Build Storybook for ui
-        run: npx nx build-storybook ui
+      # Билдим сторибук для либы ui-kit
+      - name: Build Storybook for ui-kit
+        run: npx nx build-storybook ui-kit
 
       # Сохраняем Storybook как артефакт, чтобы его можно было скачать / задеплоить
       - name: Upload Storybook artifact
         uses: actions/upload-artifact@v4
         with:
           name: storybook-ui
-          path: dist/storybook/ui
+          path: dist/storybook/ui-kit
           if-no-files-found: error
