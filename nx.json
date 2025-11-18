@@ -8,7 +8,12 @@
       "!{projectRoot}/eslint.config.mjs",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/src/test-setup.[jt]s"
+      "!{projectRoot}/src/test-setup.[jt]s",
+      "!{projectRoot}/jest.config.[jt]s",
+      "!{projectRoot}/test-setup.[jt]s",
+      "!{projectRoot}/**/*.stories.@(js|jsx|ts|tsx|mdx)",
+      "!{projectRoot}/.storybook/**/*",
+      "!{projectRoot}/tsconfig.storybook.json"
     ],
     "sharedGlobals": ["{workspaceRoot}/.github/workflows/ci.yml"]
   },
@@ -27,7 +32,31 @@
         "{workspaceRoot}/eslint.config.mjs"
       ]
     },
-    "@nx/vite:test": { "cache": true, "inputs": ["default", "^production"] }
+    "@nx/vite:test": {
+      "cache": true,
+      "inputs": ["default", "^production"]
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
+    "@nx/jest:jest": {
+      "cache": true,
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "options": {
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "build-storybook": {
+      "cache": true
+    }
   },
   "generators": {
     "@nx/angular:application": {
@@ -35,7 +64,25 @@
       "linter": "eslint",
       "style": "css",
       "unitTestRunner": "vitest"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "jest"
+    },
+    "@nx/angular:component": {
+      "style": "css"
     }
   },
-  "nxCloudId": "691bc0e9c1f4b85617193f98"
+  "nxCloudId": "691bc0e9c1f4b85617193f98",
+  "plugins": [
+    {
+      "plugin": "@nx/storybook/plugin",
+      "options": {
+        "serveStorybookTargetName": "storybook",
+        "buildStorybookTargetName": "build-storybook",
+        "testStorybookTargetName": "test-storybook",
+        "staticStorybookTargetName": "static-storybook"
+      }
+    }
+  ]
 }
